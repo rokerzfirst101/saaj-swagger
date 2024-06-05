@@ -207,7 +207,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DeviceRegistration"
       responses:
-        '200':
+        '201':
           description: 'Success'
 components:
   schemas:
