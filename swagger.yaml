@@ -17,9 +17,8 @@ paths:
     get:
       tags:
         - facilities
-      summary: Query facilities using Name, Pincode Filter along with sort by Distance
-      description: Update an existing pet by Id
-      operationId: updatePet
+      description: Get All Facilities sorted by Distance from User's Location
+      operationId: getAllFacilities
       parameters:
         - in: query
           name: user_lat
@@ -73,6 +72,18 @@ paths:
             type: string
           required: false
           description: Searches on the basis of System of Medicine
+        - in: query
+          name: has_pathology
+          schema:
+            type: boolean
+          required: false
+          description: If true, the request will return all facilities with Pathology
+        - in: query
+          name: has_radiology
+          schema:
+            type: boolean
+          required: false
+          description: If true, the request will return all facilities with Radiology
         - in: query
           name: offset
           schema:
@@ -364,7 +375,10 @@ components:
             pincode: 804408
             lat: 25.27
             long: 84.98
-            system_of_medicine: Modern Medicine(Allopathy)
+            has_pathology: true
+            has_radiology: true
+            has_blood_bank: true
+            system_of_medicine: [Modern Medicine(Allopathy)]
         meta:
           size: 1
           offset: 0
@@ -373,16 +387,19 @@ components:
       value:
         data:
           - id: 1
-            hi_name: पीएचसी सिकरिया जहा
-            hi_type: पीएचस
-            hi_district: पीएचस
-            hi_block: जहानाब
+            name: पीएचसी सिकरिया जहा
+            type: पीएचस
+            district: पीएचस
+            block: जहानाब
             hfr_id: IN1010000003
-            hi_address: सिकरिया मेन कैम्पस
+            address: सिकरिया मेन कैम्पस
             pincode: 804408
             lat: 25.27
             long: 84.98
-            hi_system_of_medicine: आधुनिक चिकित्सा (एलोपैथी)
+            has_pathology: true
+            has_radiology: true
+            has_blood_bank: true
+            system_of_medicine: [आधुनिक चिकित्सा (एलोपैथी)]
         meta:
           size: 1
           offset: 0
