@@ -216,10 +216,51 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DeviceRegistration"
+              $ref: '#/components/schemas/DeviceRegistration'
       responses:
         '201':
-          description: 'Success'
+          description: Success
+  /admin/notification:
+    post:
+      tags:
+        - notification
+      summary: Send Notifications
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Notification'
+  /notification:
+    get:
+      tags:
+        - notification
+      summary: Get recent 10 notifications
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+              examples:
+                Notifications:
+                  $ref: '#/components/examples/Notifications'
 components:
   schemas:
     Facility:
@@ -348,20 +389,49 @@ components:
           example: fcm_token_here
         platform:
           type: string
-          enum: ['android', 'ios']
+          enum:
+            - android
+            - ios
         metadata:
           type: object
           properties:
             version:
               type: string
-              example: 'v1.0.2'
+              example: v1.0.2
             manufacturer:
               type: string
-              example: 'Samsung'
+              example: Samsung
             model:
               type: string
-              example: "A52"
+              example: A52
+    Notification:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Order #112 Received'
+        message:
+          type: string
+          example: 'Your order #122 is successfully placed'
+        icon:
+          type: string
+          example: https://example.com/icon.png
+        image:
+          type: string
+          example: https://example.com/pizza.png
+        deepLinkUrl:
+          type: string
+          example: https://example.com/orders
   examples:
+    Notifications:
+      value:
+        data:
+          - id: 1
+            title: 'Order #112 Received'
+            message: 'Your order #122 is successfully placed'
+            icon: https://example.com/icon.png
+            image: https://example.com/pizza.png
+            deepLinkUrl: https://example.com/orders
     EnFacilities:
       value:
         data:
@@ -378,7 +448,8 @@ components:
             has_pathology: true
             has_radiology: true
             has_blood_bank: true
-            system_of_medicine: [Modern Medicine(Allopathy)]
+            system_of_medicine:
+              - Modern Medicine(Allopathy)
         meta:
           size: 1
           offset: 0
@@ -399,7 +470,8 @@ components:
             has_pathology: true
             has_radiology: true
             has_blood_bank: true
-            system_of_medicine: [आधुनिक चिकित्सा (एलोपैथी)]
+            system_of_medicine:
+              - आधुनिक चिकित्सा (एलोपैथी)
         meta:
           size: 1
           offset: 0
