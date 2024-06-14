@@ -223,7 +223,7 @@ paths:
   /admin/notification:
     post:
       tags:
-        - notification
+        - admin
       summary: Send Notifications
       requestBody:
         required: true
@@ -241,6 +241,39 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Notification'
+  /admin/facilities/bulk-update:
+    post:
+      tags:
+        - admin
+      summary: Bulk update lat long data for Facilities using a CSV
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                data:
+                  description: A csv file with hfr_id, lat and long columns in the same order without any header row
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      failed:
+                        type: integer
+                      skipped:
+                        type: integer
+                      success:
+                        type: integer
   /notifications:
     get:
       tags:
